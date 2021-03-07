@@ -1,30 +1,29 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import InfoCard from './components/InfoCard/InfoCard'
+import CoinTable from './components/CoinTable/CoinTable'
 
 function App() {
   
-  const [btc, setBtc] = useState([])
+  const [top100Data, setTop100Data] = useState([])
 
   useEffect(() => {
     axios
-    .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false')
+    .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h%2C%207d%2C%2030d')
     .then((response) => {
-      setBtc(response.data[0])
+      setTop100Data(response.data)
     }) 
   }, [])
   
-  function checkBtc() {
-    console.log('STATE:', btc)
-  }
   
 
   return (
     <>
-    <h1>Hello</h1>
-    <button onClick={checkBtc}>Click Me</button>
+      <CoinTable data={top100Data}/>
+    
     </>
     
   );
   }
 
-export default App;
+export default App; 
