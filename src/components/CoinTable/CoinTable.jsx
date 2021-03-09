@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
+import {Link, Route} from 'react-router-dom'
+import axios from 'axios'
+import CoinInfo from "../CoinInfo/CoinInfo";
 
 import './styles.css'
 
-export default function CoinTable({data}) {
+export default function CoinTable() {
 
-    const [coinData, setCoinData] = useState([])
+  const [top100Data, setTop100Data] = useState([]);
 
-    // useEffect(() => {
-    //     setCoinData(data)
-    //     console.log("COIN DATA:", coinData)
-    // })
-
-    function formatTime(time) {
-        let formattedTime = new Date(time).toLocaleDateString(
-            'en-gb',
-            {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })
-        
-        return formattedTime
-    }
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h%2C%207d%2C%2030d"
+      )
+      .then((response) => {
+        setTop100Data(response.data);
+      });
+  }, []);
 
   return (
     <table className="table">
@@ -49,16 +45,16 @@ export default function CoinTable({data}) {
       </thead>
       
       <tbody>
-        {data.map((item => {
+        {top100Data.map((item => {
             return (
-                <tr>
-          <th>{item.market_cap_rank}</th>
-          <td>
+                <tr key={item.id}>
+          <th className='rank-row'>{item.market_cap_rank}</th>
+          <td className='name-row'>
               <img src={item.image} alt=""/>
-              <p>{item.name}</p>
+              <Link to={`/coin/${item.id}`}>{item.name}</Link>
           </td>
-          <td>${item.current_price}</td>
-          <td>{item.market_cap_change_percentage_24h}%</td>
+          <td>${parseFloat(item.current_price)}</td>
+          <td >{item.market_cap_change_percentage_24h}%</td>
           <td>${item.ath}</td>
           <td>${item.atl}</td>
           <td>${item.high_24h}</td>

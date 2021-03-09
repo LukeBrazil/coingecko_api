@@ -1,9 +1,19 @@
-tr img {
-    width: 10%;
-    float: left;
-    
-}
 
 .table {
-    width: 100%;
+    width: 80%;
+}
+
+.name-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.name-row img{
+    width: 3rem;
+    padding-right: 1rem;
+}
+
+.rank-row {
+    text-align: center;
 }

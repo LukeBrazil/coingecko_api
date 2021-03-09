@@ -1,0 +1,15 @@
+
+.navbar {
+    background: gray;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.navbar-item {
+    height: 4rem;
+}
+
+.navbar-item img {
+    height: 100%;
+}

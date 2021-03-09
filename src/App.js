@@ -1,29 +1,25 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import InfoCard from './components/InfoCard/InfoCard'
-import CoinTable from './components/CoinTable/CoinTable'
+import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import CoinTable from "./components/CoinTable/CoinTable";
+import CoinInfo from './components/CoinInfo/CoinInfo'
+
+
+import "./App.css";
 
 function App() {
-  
-  const [top100Data, setTop100Data] = useState([])
-
-  useEffect(() => {
-    axios
-    .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h%2C%207d%2C%2030d')
-    .then((response) => {
-      setTop100Data(response.data)
-    }) 
-  }, [])
-  
-  
 
   return (
-    <>
-      <CoinTable data={top100Data}/>
-    
-    </>
-    
+    <main>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={CoinTable} />
+          <Route path='/coin/:id' component={CoinInfo} />
+        </Switch>
+      </Router>
+    </main>
   );
-  }
+}
 
-export default App; 
+export default App;
