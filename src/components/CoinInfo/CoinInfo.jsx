@@ -14,7 +14,9 @@ export default function CoinInfo({ match }) {
             `https://api.coingecko.com/api/v3/coins/${id}`
           )
           .then((response) => {
+            console.log(response.data)
             setCoin(response.data)
+
           });
       }, []);
 
